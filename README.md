@@ -1,3 +1,11 @@
+### How to run the app
+1. Ensure that you have npm installed
+2. Clone the repo
+3. cd to your directory
+4. npm install
+5. npm start
+Open on [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
 ## Available Scripts
 
 In the project directory, you can run:
