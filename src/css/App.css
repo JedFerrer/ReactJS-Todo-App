@@ -144,6 +144,11 @@ h1, h2, h3, h4, h5 {
 .todo-list div .edit {
   display: none;
 }
+.edit-input-wrapper .edit-input {
+  width: 88%;
+  font-size: 20px;
+  margin-left: 20px;
+}
 .todo-count span {
   font-size: 12px;
 }

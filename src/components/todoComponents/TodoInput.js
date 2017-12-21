@@ -7,6 +7,7 @@ export default class TodoInput extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.removeAll = this.removeAll.bind(this);
+    this.checkAll =this.checkAll.bind(this);
   }
 
   handleChange(e) {
@@ -25,9 +26,19 @@ export default class TodoInput extends React.Component {
     this.props.removeAll();
   }
 
+  checkAll() {
+    this.props.checkAll();
+  }
+
   render() {
     const clearButton = (
-      <div className="menu-container list-group-item">	
+      <div className="menu-container list-group-item">
+        <input
+          className="pull-left"
+          type="checkbox"
+          checked={this.props.ischeckAll}
+          onClick={this.checkAll}
+        />
         <button className="clear-all btn btn-success pull-right" onClick={this.removeAll}>
           Clear All
         </button>

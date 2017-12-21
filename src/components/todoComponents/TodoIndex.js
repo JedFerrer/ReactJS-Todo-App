@@ -7,17 +7,26 @@ import TodoFooter from './TodoFooter';
 export default class TodoIndex extends React.Component {
   constructor() {
     super()
-    this.state = {
+
+    let todoListObj = {
       todos: [],
       nextId: 0,
       completedCount: 0,
       itemsLeft: 0,
-      editing: null
+      editing: null,
+      isCheckAll: false
     }
 
+    //Search for Existing Local Storage
+    if (typeof(localStorage["todoListCollection"]) !== 'undefined') {
+      todoListObj = JSON.parse(localStorage["todoListCollection"]);
+    }
+
+    this.state = todoListObj;
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
     this.removeAll = this.removeAll.bind(this);
+    this.checkAll = this.checkAll.bind(this);
     this.onClickToggleComplete = this.onClickToggleComplete.bind(this);
     this.clearCompleted = this.clearCompleted.bind(this);
     this.cancel = this.cancel.bind(this);
@@ -33,8 +42,11 @@ export default class TodoIndex extends React.Component {
       itemsLeft: todos.length,
       nextId: ++nextId,
       editText: null
+    }, () => {
+      this.saveToLocalStorage();
     });
     this.updateCounters(todos);
+
   }
 
   save(id, text) {
@@ -43,6 +55,8 @@ export default class TodoIndex extends React.Component {
     this.setState({
       todos: todos,
       editing: null
+    }, () => {
+      this.saveToLocalStorage();
     });
   }
 
@@ -51,6 +65,8 @@ export default class TodoIndex extends React.Component {
     todos.splice(id, 1);
     this.setState({
       todos: todos
+    }, () => {
+      this.saveToLocalStorage();
     });
     this.updateCounters(todos);
   }
@@ -61,8 +77,24 @@ export default class TodoIndex extends React.Component {
       nextId: 0,
       completedCount: 0,
       itemsLeft: 0,
-      editing: null
+      editing: null,
+      isCheckAll: false
     })
+    localStorage.removeItem("todoListCollection");
+  }
+
+  checkAll() {
+    let todos = this.state.todos.slice();
+    const isCheckAll = !this.state.isCheckAll;
+    for (let todo of todos) {
+      todo.completed = isCheckAll
+    }
+    this.setState({
+      todos: todos
+    }, () => {
+      this.saveToLocalStorage();
+    });
+    this.updateCounters(todos);
   }
 
   updateCounters(todos) {
@@ -75,7 +107,9 @@ export default class TodoIndex extends React.Component {
     this.setState({
       completedCount: completedCounter,
       itemsLeft: todos.length - completedCounter,
+      isCheckAll: completedCounter === todos.length
     });
+    return completedCounter;
   }
 
   onClickToggleComplete(id) {
@@ -84,6 +118,8 @@ export default class TodoIndex extends React.Component {
 
     this.setState({
       todos: todos
+    }, () => {
+      this.saveToLocalStorage();
     });
     this.updateCounters(todos);
   }
@@ -95,6 +131,8 @@ export default class TodoIndex extends React.Component {
       
       this.setState({
         todos: todos
+      }, () => {
+        this.saveToLocalStorage();
       });
       this.updateCounters(todos);
     }
@@ -108,6 +146,10 @@ export default class TodoIndex extends React.Component {
     this.setState({editing: null});
   }
 
+  saveToLocalStorage() {
+    localStorage["todoListCollection"] = JSON.stringify(this.state);
+  }
+
   render() {
     const state = this.state;
     const hasTodos = state.todos.length > 0;
@@ -115,7 +157,13 @@ export default class TodoIndex extends React.Component {
       <div className="App">
         <div className="todo-wrapper">
           <TodoHeader />
-          <TodoInput addTodo={this.addTodo} hasTodos={hasTodos} removeAll={this.removeAll}/>
+          <TodoInput
+            addTodo={this.addTodo}
+            hasTodos={hasTodos}
+            removeAll={this.removeAll}
+            ischeckAll={state.isCheckAll}
+            checkAll={this.checkAll}
+          />
           <ul className="todo-list">
             {
               state.todos.map((todo, index) => {

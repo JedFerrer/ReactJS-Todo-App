@@ -71,20 +71,27 @@ export default class TodoItem extends React.Component {
     let todoItemLine;
     if (this.props.editing) {
         todoItemLine = (
-          <input
-            className="form-control"
-            type="text"
-            value={this.state.editText}
-            onChange={this.handleChange}
-            onBlur={this.handleSubmit}
-            onKeyDown={this.handleKeyDown}
-            ref={(input) => { this.textInput = input; }}
-          />
+          <div className="edit-input-wrapper">
+            <input
+              className="form-control edit-input"
+              type="text"
+              value={this.state.editText}
+              onChange={this.handleChange}
+              onBlur={this.handleSubmit}
+              onKeyDown={this.handleKeyDown}
+              ref={(input) => { this.textInput = input; }}
+            />
+          </div>
         )
     } else {
       todoItemLine = (
         <div>
-          <input className="pull-left" type="checkbox" onClick={() => this.toggleComplete(this.props.index)} />
+          <input
+            className="pull-left"
+            type="checkbox"
+            checked={this.props.todo.completed}
+            onClick={() => this.toggleComplete(this.props.index)}
+          />
           <p 
             className={`todo-desc completed-${this.props.todo.completed}`}
             onDoubleClick={this.handleEdit}>
