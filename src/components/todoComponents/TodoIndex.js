@@ -27,7 +27,7 @@ export default class TodoIndex extends React.Component {
     this.removeTodo = this.removeTodo.bind(this);
     this.removeAll = this.removeAll.bind(this);
     this.checkAll = this.checkAll.bind(this);
-    this.onClickToggleComplete = this.onClickToggleComplete.bind(this);
+    this.toggleComplete = this.toggleComplete.bind(this);
     this.clearCompleted = this.clearCompleted.bind(this);
     this.cancel = this.cancel.bind(this);
     this.save = this.save.bind(this);
@@ -112,7 +112,7 @@ export default class TodoIndex extends React.Component {
     return completedCounter;
   }
 
-  onClickToggleComplete(id) {
+  toggleComplete(id) {
     let todos = this.state.todos.slice();
     todos[id].completed = !todos[id].completed
 
@@ -173,7 +173,7 @@ export default class TodoIndex extends React.Component {
                     todo={todo}
                     key={todo.id}
                     id={todo.id}
-                    toggleComplete={this.onClickToggleComplete}
+                    toggleComplete={this.toggleComplete}
                     removeTodo={this.removeTodo}
                     onEdit={this.edit.bind(this, todo)}
                     editing={this.state.editing === todo.id}

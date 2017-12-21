@@ -5,16 +5,16 @@ export default class TodoInput extends React.Component {
     super()
     this.state = {value: ""};
     this.handleChange = this.handleChange.bind(this);
-    this.keyPress = this.keyPress.bind(this);
-    this.removeAll = this.removeAll.bind(this);
-    this.checkAll =this.checkAll.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    this.handleCheckAll =this.handleCheckAll.bind(this);
   }
 
   handleChange(e) {
     this.setState({value: e.target.value});
   }
 
-  keyPress(e) {
+  handleKeyPress(e) {
     let todoValue = this.state.value;
     if (e.key === 'Enter' && todoValue.length > 0) {
       this.props.addTodo(todoValue);
@@ -22,24 +22,24 @@ export default class TodoInput extends React.Component {
     }
   }
 
-  removeAll() {
+  handleRemoveAll() {
     this.props.removeAll();
   }
 
-  checkAll() {
+  handleCheckAll() {
     this.props.checkAll();
   }
 
   render() {
-    const clearButton = (
+    const inputBottomPanel = (
       <div className="menu-container list-group-item">
         <input
           className="pull-left"
           type="checkbox"
           checked={this.props.ischeckAll}
-          onClick={this.checkAll}
+          onClick={this.handleCheckAll}
         />
-        <button className="clear-all btn btn-success pull-right" onClick={this.removeAll}>
+        <button className="clear-all btn btn-success pull-right" onClick={this.handleRemoveAll}>
           Clear All
         </button>
         <div className="clear"></div>
@@ -55,10 +55,10 @@ export default class TodoInput extends React.Component {
               placeholder="What needs to be done?"
               value={this.state.value}
               onChange={this.handleChange}
-              onKeyDown={this.keyPress}
+              onKeyDown={this.handleKeyPress}
             />
           </div>
-          { this.props.hasTodos ? clearButton : null}
+          { this.props.hasTodos ? inputBottomPanel : null}
         </div>
       </div>
     );

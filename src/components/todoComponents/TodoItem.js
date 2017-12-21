@@ -3,7 +3,7 @@ import React from 'react';
 export default class TodoItem extends React.Component {
   constructor(props) {
     super(props)
-    this.removeTodo = this.removeTodo.bind(this);
+    this.handleRemoveTodo = this.handleRemoveTodo.bind(this);
     this.toggleComplete = this.toggleComplete.bind(this);
     this.focusTextInput = this.focusTextInput.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -15,7 +15,7 @@ export default class TodoItem extends React.Component {
     }
   }
 
-  removeTodo(id) {
+  handleRemoveTodo(id) {
     this.props.removeTodo(id);
   }
 
@@ -33,7 +33,7 @@ export default class TodoItem extends React.Component {
       this.props.onSave(this.props.index, val);
       this.setState({editText: val});
     } else {
-      this.removeTodo(this.props.index)
+      this.handleRemoveTodo(this.props.index)
     }
   }
 
@@ -90,14 +90,14 @@ export default class TodoItem extends React.Component {
             className="pull-left"
             type="checkbox"
             checked={this.props.todo.completed}
-            onClick={() => this.toggleComplete(this.props.index)}
+            onChange={() => this.toggleComplete(this.props.index)}
           />
           <p 
             className={`todo-desc completed-${this.props.todo.completed}`}
             onDoubleClick={this.handleEdit}>
               {this.props.todo.text}
           </p>
-          <span className="destroy" onClick={() => this.removeTodo(this.props.index)}></span>
+          <span className="destroy" onClick={() => this.handleRemoveTodo(this.props.index)}></span>
         </div>
       )
     }
