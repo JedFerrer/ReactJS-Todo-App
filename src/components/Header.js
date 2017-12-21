@@ -5,7 +5,7 @@ const Header = () => {
     <div className="header text-center">
       <h1>TODO APP V.3 (Project 5)</h1>
       <h5>
-        Using: ReactJS | Twitter Bootsrap | HTML5 Session Storage | #HTML #CSS #JS
+        Using: ReactJS | Twitter Bootsrap | HTML5 Local Storage | #HTML #CSS #JS
       </h5>
     </div>
   )
