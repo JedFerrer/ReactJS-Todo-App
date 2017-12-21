@@ -1,10 +1,13 @@
-### How to run the app
+## How to run the app
 1. Ensure that you have npm installed
 2. Clone the repo
 3. cd to your directory
 4. npm install
 5. npm start
-Open on [http://localhost:3000](http://localhost:3000) to view it in the browser.
+6. Open on [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+### Live Demo
+[https://reactjs-todo-app-v3.herokuapp.com](https://reactjs-todo-app-v3.herokuapp.com)
 
 ## Available Scripts
 
